@@ -1,3 +1,5 @@
+from utils.utils import read_lines
+
 # Dictionary to map spelled-out digits to their numeric equivalents
 digit_map = {
     'one': '1',
@@ -50,8 +52,7 @@ def part_two(input_string):
     digits = [first_digit, last_digit] if first_digit and last_digit else []
     return parse_digits_to_number(digits)
 
-with open('input.txt', 'r') as f:
-    lines = f.readlines()
+lines = read_lines()
 
 part_one_sum = sum([part_one(line) for line in lines])
 part_two_sum = sum([part_two(line) for line in lines])

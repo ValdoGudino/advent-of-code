@@ -1,3 +1,5 @@
+from utils.utils import read_lines
+
 max_cubes = {
     'red': 12,
     'green': 13,
@@ -60,8 +62,7 @@ def get_power(parsed_game):
     return power
     
 
-with open('input.txt', 'r') as f:
-    lines = f.readlines()
+lines = read_lines()
 
 possible_sum = 0
 sum_of_power = 0

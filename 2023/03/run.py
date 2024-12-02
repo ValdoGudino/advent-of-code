@@ -1,6 +1,4 @@
-def read_grid_from_file(file_path):
-    with open(file_path, 'r') as file:
-        return file.read()
+from utils.utils import read_grid_from_file
 
 def parse_grid(input_str):
     return [list(line) for line in input_str.strip().split('\n')]
@@ -98,8 +96,7 @@ def find_adjacent_pairs_for_gears(grid):
     return adjacent_pairs
 
 # Read the grid from a file
-file_path = 'input.txt'
-input_str = read_grid_from_file(file_path)
+input_str = read_grid_from_file()
 grid = parse_grid(input_str)
 adjacent_numbers = find_adjacent_numbers(grid)
 print("Sum of numbers adjacent to a symbol:", sum(map(int, adjacent_numbers)))
