@@ -1,4 +1,5 @@
 # Ignore all .txt files
 *.txt
 
+# Ignore all .pyc files
 *.pyc

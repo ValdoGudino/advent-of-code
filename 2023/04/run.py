@@ -1,6 +1,6 @@
 from utils.utils import read_lines
 
-def parse_game_line(line):
+def parse_card_line(line):
     game_data = line.split(': ')[1]
 
     group1, group2 = game_data.split(' | ')
@@ -11,7 +11,7 @@ def parse_game_line(line):
     return winning_numbers, scratch_numbers
 
 def calculate_point_value(line):
-    winning_numbers, scratch_numbers = parse_game_line(line)
+    winning_numbers, scratch_numbers = parse_card_line(line)
     point_value = 0
 
     for number in scratch_numbers:
@@ -23,27 +23,31 @@ def calculate_point_value(line):
 
     return point_value
 
-def calculate_scatchcards_match(line):
-    winning_numbers, scratch_numbers = parse_game_line(line)
-    match = 0
-
+def calculate_matches(winning_numbers, scratch_numbers):
+    matches = 0
     for number in scratch_numbers:
         if number in winning_numbers:
-            match += 1
+            matches += 1
+    return matches
 
-    return scratchcards_sum
+def calculate_total_scratchcards(lines):
+    total_cards = len(lines)
+    card_counts = [1] * total_cards  # Start with one of each card
 
-def calculate_scratchcards_sum(lines):
-    scratchcards_sum = 0
+    for i in range(total_cards):
+        winning_numbers, scratch_numbers = parse_card_line(lines[i])
+        matches = calculate_matches(winning_numbers, scratch_numbers)
 
-    for line in lines:
-        scratchcards_sum += calculate_scatchcards_match(line)
+        if matches > 0:
+            for j in range(1, matches + 1):
+                if i + j < total_cards:
+                    card_counts[i + j] += card_counts[i]
 
-    return scratchcards_sum
+    return sum(card_counts)
 
 lines = read_lines()
-
 point_value_sum = sum(calculate_point_value(line) for line in lines) 
 print('Point value sum:', point_value_sum)
 
-scratchcards_sum = calculate_scratchcards_sum(lines)
+scratchcards_total = calculate_total_scratchcards(lines)
+print("Scratchcards total:", scratchcards_total)
