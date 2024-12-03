@@ -39,7 +39,7 @@ def multiply_and_sum_do_and_dont(string):
     return total_sum
 
 # Example usage
-input_string = utils.read_grid_from_file()
+input_string = utils.read_string_from_file()
 result = multiply_and_sum(input_string)
 print("Total sum of multiplications:", result)
 result = multiply_and_sum_do_and_dont(input_string)
