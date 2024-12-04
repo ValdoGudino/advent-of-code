@@ -66,7 +66,7 @@ def count_a_bordered_by_mas(grid):
             marked[x+1][y+1] = True
             return True
         
-                # Check for mixed "MAS" and "SAM" patterns
+        # Check for mixed "MAS" and "SAM" patterns
         if (in_bounds(x-1, y-1) and grid[x-1][y-1] == 'M' and
             in_bounds(x-1, y+1) and grid[x-1][y+1] == 'M' and
             in_bounds(x+1, y-1) and grid[x+1][y-1] == 'S' and
