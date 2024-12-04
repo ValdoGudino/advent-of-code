@@ -7,7 +7,7 @@ def read_string_from_file():
         return f.read()
     
 def read_grid_from_file():
-    read_string_from_file
+    return read_string_from_file()
 
 def read_lines():    
     with open(input_file_path, 'r') as f:
