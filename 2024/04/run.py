@@ -32,7 +32,7 @@ def search_and_mark_word(grid, word):
 
     return count
 
-def count_a_bordered_by_m_s(grid):
+def count_a_bordered_by_mas(grid):
     count = 0
     rows, cols = len(grid), len(grid[0])
     marked = [[False] * cols for _ in range(rows)]
@@ -107,6 +107,6 @@ count = search_and_mark_word(grid, "XMAS")
 print(f"Found XMAS: {count}")
 
 grid = parse_grid(input_string)
-count = count_a_bordered_by_m_s(grid)
+count = count_a_bordered_by_mas(grid)
 
 print(f"Found crosses: {count}")
