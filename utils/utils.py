@@ -12,3 +12,4 @@ def read_grid_from_file():
 def read_lines():    
     with open(input_file_path, 'r') as f:
         return f.readlines()
+        
