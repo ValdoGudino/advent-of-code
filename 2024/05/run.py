@@ -25,8 +25,6 @@ def is_valid_subsequence(subsequence, pairs):
 def comparator(x, y, precedes_rules):
     if x in precedes_rules and y in precedes_rules[x]:
         return -1 
-    if y in precedes_rules and x in precedes_rules[y]:
-        return 1 
     return 0  
 
 def sort_sequence(sequence, pairs):
@@ -38,13 +36,8 @@ def sort_sequence(sequence, pairs):
     
     cmp = cmp_to_key(lambda x, y: comparator(x, y, precedes_rules))
     
-    def recursive_sort(seq):
-        sorted_seq = sorted(seq, key=cmp)
-        if sorted_seq == seq:
-            return sorted_seq
-        return recursive_sort(sorted_seq)
-    
-    return recursive_sort(sequence)
+    seq = sorted(sequence, key=cmp)
+    return seq
 
 def find_middle_of_sequence(sequence):
     length = len(sequence)
@@ -60,8 +53,6 @@ def main():
     
     pairs, sequences = parse_input(lines)
 
-    print(f"Sequences: {len(sequences)}")
-    
     correct_middle_elements_sum = 0
     fixed_middle_elements_sum = 0
     fixed_sequences_count = 0
@@ -69,12 +60,13 @@ def main():
     for sequence in sequences:
         original_sequence = sequence.copy()
         was_fixed = False
-        while not is_valid_subsequence(sequence, pairs):
+        if not is_valid_subsequence(sequence, pairs):
             sequence = sort_sequence(sequence, pairs)
-            was_fixed = True
+            was_fixed = is_valid_subsequence(sequence, pairs)
+            if not was_fixed:
+                raise ValueError(f"Sequence is not fixed: {original_sequence} -> {sequence}")
         middle_element = find_middle_of_sequence(sequence)
         if was_fixed:
-            print(f"Fixed sequence: {original_sequence} -> {sequence}")
             fixed_middle_elements_sum += middle_element
             fixed_sequences_count += 1
         else:
