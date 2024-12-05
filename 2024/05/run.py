@@ -19,8 +19,6 @@ def is_valid_subsequence(subsequence, pairs):
     index_map = {value: idx for idx, value in enumerate(subsequence)}
     for x, y in pairs:
         if x in index_map and y in index_map and index_map[x] > index_map[y]:
-            print(f"Swapping {x} and {y}")
-            subsequence[index_map[x]], subsequence[index_map[y]] = subsequence[index_map[y]], subsequence[index_map[x]]
             return False
     return True
 
