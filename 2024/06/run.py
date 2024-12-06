@@ -14,17 +14,11 @@ def parse_grid(input_str):
 def out_of_bounds(x, y, grid):
     return not (0 <= x < len(grid) and 0 <= y < len(grid[0]))
 
-def simulate_guard_movement(grid):
-    for i, row in enumerate(grid):
-        for j, cell in enumerate(row):
-            if cell in directions:
-                x, y = i, j
-                direction = cell
-                break
-
+def simulate(grid, x, y, direction):
     visited = set()
     obstacles_encountered = {}
-    while not out_of_bounds(x, y, grid):
+    is_loop = False
+    while is_loop == False:
         visited.add((x, y))
 
         dx, dy = directions[direction]
@@ -36,11 +30,21 @@ def simulate_guard_movement(grid):
             x, y = nx, ny
         else:
             if (nx, ny, direction) in obstacles_encountered:
-                return 0, True
+                is_loop = True
             obstacles_encountered[(nx, ny, direction)] = True
             direction = turns[direction]
-    
-    return len(visited), False, visited
+
+    return len(visited), is_loop, visited
+
+def simulate_guard_movement(grid):
+    for i, row in enumerate(grid):
+        for j, cell in enumerate(row):
+            if cell in directions:
+                x, y = i, j
+                direction = cell
+                break
+
+    return simulate(grid, x, y, direction)
 
 def count_obstacle_positions(grid):
     count = 0
