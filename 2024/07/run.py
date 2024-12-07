@@ -21,21 +21,32 @@ def load_input():
     input_objects = [parse_line(line) for line in lines]
     return input_objects
 
-def evaluate_expression(values, z, ops):
-    operators = list(product(ops, repeat=len(values)-1))
-    
-    for ops in operators:
-        result = values[0]
-        for i, op in enumerate(ops):
+def evaluate_expression(values, z, ops, memo):
+    def backtrack(index, current_value):
+        if index == len(values):
+            return current_value == z
+        
+        key = (index, current_value)
+        if key in memo:
+            return memo[key]
+        
+        for op in ops:
             if op == '+':
-                result += values[i+1]
+                next_value = current_value + values[index]
             elif op == '*':
-                result *= values[i+1]
+                next_value = current_value * values[index]
             elif op == '||':
-                result = int(str(result) + str(values[i+1]))
-        if result == z:
-            return True
-    return False
+                next_value = int(str(current_value) + str(values[index]))
+            
+            if backtrack(index + 1, next_value):
+                memo[key] = True
+                return True
+        
+        memo[key] = False
+        return False
+    
+    memo = {}
+    return backtrack(1, values[0])
 
 def calculate_total_calibration(input_objects, ops, skip_z_values=None):
     total_calibration = 0
@@ -43,7 +54,7 @@ def calculate_total_calibration(input_objects, ops, skip_z_values=None):
     for obj in input_objects:
         if obj.z in skip_z_values:
             continue
-        if evaluate_expression(obj.values, obj.z, ops):
+        if evaluate_expression(obj.values, obj.z, ops, {}):
             total_calibration += obj.z
             skip_z_values.add(obj.z)
     return total_calibration, skip_z_values
