@@ -49,6 +49,6 @@ ops = ['+', '*']
 total_calibration = calculate_total_calibration(input_objects, ops)
 print(f"Total Calibration Result: {total_calibration}")
 
-ops += '||'
+ops += ['||']
 total_calibration = calculate_total_calibration(input_objects, ops)
 print(f"Total Calibration Result: {total_calibration}")
