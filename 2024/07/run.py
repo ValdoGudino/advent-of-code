@@ -20,11 +20,10 @@ def load_input():
     input_objects = [parse_line(line) for line in lines]
     return input_objects
 
-def evaluate_expression(values, z):
-    operators = list(product(['+', '*', '||'], repeat=len(values)-1))
+def evaluate_expression(values, z, ops):
+    operators = list(product(ops, repeat=len(values)-1))
     
     for ops in operators:
-        print(ops)
         result = values[0]
         for i, op in enumerate(ops):
             if op == '+':
@@ -37,15 +36,19 @@ def evaluate_expression(values, z):
             return True
     return False
 
-def calculate_total_calibration(input_objects):
+def calculate_total_calibration(input_objects, ops):
     total_calibration = 0
     for obj in input_objects:
-        if evaluate_expression(obj.values, obj.z):
+        if evaluate_expression(obj.values, obj.z, ops):
             total_calibration += obj.z
     return total_calibration
 
-# Example usage
-if __name__ == "__main__":
-    input_objects = load_input()
-    total_calibration = calculate_total_calibration(input_objects)
-    print(f"Total Calibration Result: {total_calibration}")
+input_objects = load_input()
+
+ops = ['+', '*']
+total_calibration = calculate_total_calibration(input_objects, ops)
+print(f"Total Calibration Result: {total_calibration}")
+
+ops += '||'
+total_calibration = calculate_total_calibration(input_objects, ops)
+print(f"Total Calibration Result: {total_calibration}")
