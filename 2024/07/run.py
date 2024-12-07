@@ -1,6 +1,5 @@
 import time
 from utils.utils import read_lines
-from itertools import product
 
 class InputLine:
     def __init__(self, z, values):
