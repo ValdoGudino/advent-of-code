@@ -1,3 +1,4 @@
+import time
 from utils.utils import read_lines
 from itertools import product
 
@@ -47,18 +48,18 @@ def calculate_total_calibration(input_objects, ops, skip_z_values=None):
             skip_z_values.add(obj.z)
     return total_calibration, skip_z_values
 
+start_time = time.time()
 input_objects = load_input()
 
-# First calculation with '+' and '*'
 ops = ['+', '*']
 total_calibration, skip_z_values = calculate_total_calibration(input_objects, ops)
 print(f"Total Calibration Result (without '||'): {total_calibration}")
 
-# Second calculation with '+', '*', and '||', skipping already accounted z values
 ops += ['||']
 total_calibration_with_concat, _ = calculate_total_calibration(input_objects, ops, skip_z_values)
 print(f"Total Calibration Result (with '||'): {total_calibration_with_concat}")
 
-# Combined total calibration result
 combined_total_calibration = total_calibration + total_calibration_with_concat
+end_time = time.time()
 print(f"Combined Total Calibration Result: {combined_total_calibration}")
+print(f"Time taken for calculations: {end_time - start_time} seconds")
