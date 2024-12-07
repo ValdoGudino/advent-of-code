@@ -36,19 +36,29 @@ def evaluate_expression(values, z, ops):
             return True
     return False
 
-def calculate_total_calibration(input_objects, ops):
+def calculate_total_calibration(input_objects, ops, skip_z_values=None):
     total_calibration = 0
+    skip_z_values = skip_z_values or set()
     for obj in input_objects:
+        if obj.z in skip_z_values:
+            continue
         if evaluate_expression(obj.values, obj.z, ops):
             total_calibration += obj.z
-    return total_calibration
+            skip_z_values.add(obj.z)
+    return total_calibration, skip_z_values
 
 input_objects = load_input()
 
+# First calculation with '+' and '*'
 ops = ['+', '*']
-total_calibration = calculate_total_calibration(input_objects, ops)
-print(f"Total Calibration Result: {total_calibration}")
+total_calibration, skip_z_values = calculate_total_calibration(input_objects, ops)
+print(f"Total Calibration Result (without '||'): {total_calibration}")
 
+# Second calculation with '+', '*', and '||', skipping already accounted z values
 ops += ['||']
-total_calibration = calculate_total_calibration(input_objects, ops)
-print(f"Total Calibration Result: {total_calibration}")
+total_calibration_with_concat, _ = calculate_total_calibration(input_objects, ops, skip_z_values)
+print(f"Total Calibration Result (with '||'): {total_calibration_with_concat}")
+
+# Combined total calibration result
+combined_total_calibration = total_calibration + total_calibration_with_concat
+print(f"Combined Total Calibration Result: {combined_total_calibration}")
