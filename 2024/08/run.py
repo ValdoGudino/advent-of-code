@@ -37,7 +37,6 @@ def count_antinodes(grid):
     antinodes = calculate_antinodes(nodes)
     return len(antinodes)
 
-# Load grid from input.txt
 grid = read_grid_from_file()
 grid = parse_grid(grid)
 
