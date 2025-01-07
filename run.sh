@@ -1,3 +1,3 @@
 export YEAR=$1
 export DAY=$2
-python3 -m $YEAR.$DAY.run
+/opt/homebrew/anaconda3/bin/python -m $YEAR.$DAY.run
